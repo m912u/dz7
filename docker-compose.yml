@@ -1,0 +1,18 @@
+---
+version: '2'
+services:
+  build_farm:
+    build: maven-build-farm
+    volumes:
+      - ./webapp:/opt/artifact
+  web:
+    build: tomcat-web
+    depends_on: 
+      - build_farm
+    links:
+      - build_farm
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webapp:/opt/tomcat/webapps
+
